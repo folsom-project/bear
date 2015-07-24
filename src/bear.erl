@@ -39,7 +39,6 @@
 -record(scan_result, {n=0, sumX=0, sumXX=0, sumInv=0, sumLog, max, min}).
 -record(scan_result2, {x2=0, x3=0, x4=0}).
 
--compile([native]).
 
 get_statistics([_,_,_,_,_|_] = Values) ->
     Scan_res = scan_values(Values),
