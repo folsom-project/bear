@@ -1,6 +1,6 @@
 {application, bear,
  [
-  {description, ""},
+  {description, "A set of statistics functions for erlang"},
   {vsn, git},
   {registered, []},
   {applications, []},
