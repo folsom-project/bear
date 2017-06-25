@@ -8,5 +8,5 @@
   {modules, []},
   {maintainers, ["Joe Williams"]},
   {licenses, ["Apache 2"]},
-  {links, [{"Github", "https://github.com/project-folsom/bear"}]}
+  {links, [{"Github", "https://github.com/folsom-project/bear"}]}
  ]}.
