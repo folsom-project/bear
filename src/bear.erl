@@ -25,7 +25,7 @@
 
 -module(bear).
 
--compile([export_all]).
+%-compile([export_all]).
 
 -export([
          get_statistics/1,
