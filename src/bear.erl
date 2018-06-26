@@ -25,11 +25,21 @@
 
 -module(bear).
 
--compile([export_all]).
+%-compile([export_all]).
 
 -export([
          get_statistics/1,
-         get_statistics/2
+         get_statistics/2,
+         get_statistics_subset/2,
+         kendall_correlation/2,
+         simple_ranking/1,
+         tied_ranking/1,
+         tied_ordered_ranking/1,
+         tied_ordered_ranking/3,
+         kendall_right_of/2,
+         kendall_right_of_item/2,
+         tied_add_prev/2,
+         tied_rank_worker/3
         ]).
 
 -define(HIST_BINS, 10).
