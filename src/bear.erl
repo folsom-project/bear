@@ -29,7 +29,8 @@
 
 -export([
          get_statistics/1,
-         get_statistics/2
+         get_statistics/2,
+         get_statistics_subset/2
         ]).
 
 -define(HIST_BINS, 10).
