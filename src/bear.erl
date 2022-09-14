@@ -42,6 +42,37 @@
          tied_rank_worker/3
         ]).
 
+-ifdef(TEST).
+-export([ arithmetic_mean/1
+        , geometric_mean/1
+        , get_bin_count/3
+        , get_bin_width/2
+        , get_covariance/2
+        , get_hist_bins/4
+        , get_kendall_correlation/2
+        , get_pearson_correlation/2
+        , get_spearman_correlation/2
+        , harmonic_mean/1
+        , inverse/1
+        , kurtosis/2
+        , math_log/1
+        , perc/2
+        , percentile/3
+        , ranks_of/1
+        , revsort/1
+        , round_bin/1
+        , round_bin/2
+        , scan_values/1
+        , scan_values/2
+        , scan_values2/2
+        , scan_values2/3
+        , skewness/2
+        , std_deviation/2
+        , update_bin/3
+        , variance/2
+        ]).
+-endif.
+
 -define(HIST_BINS, 10).
 
 -define(STATS_MIN, 5).
