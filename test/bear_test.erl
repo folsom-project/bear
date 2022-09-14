@@ -23,6 +23,7 @@
 %%% ====================================================================
 -module(bear_test).
 
+-compile(nowarn_export_all).
 -compile(export_all).
 
 -record(scan_result, {n=0, sumX=0, sumXX=0, sumInv=0, sumLog, max, min}).
