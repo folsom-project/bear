@@ -128,6 +128,8 @@ geometric_mean_test() ->
 
 harmonic_mean_test() ->
     ?assertEqual(0, bear:harmonic_mean(#scan_result{n=100, sumInv=0})),
+    ?assertEqual(0, bear:harmonic_mean(#scan_result{n=100, sumInv=0.0})),
+    ?assertEqual(0, bear:harmonic_mean(#scan_result{n=100, sumInv=-0.0})),
     ?assertEqual(10.0, bear:harmonic_mean(#scan_result{n=100, sumInv=10})).
 
 percentile_test() ->
@@ -141,10 +143,18 @@ std_deviation_test() ->
     ?assertEqual(3.0, bear:std_deviation(#scan_result{n=10},#scan_result2{x2=81})).
 
 skewness_test() ->
+    %% check the handling of -0.0 and +0.0 from math:pow/2 in bear:skewness/2
+    ?assertEqual(0.0, bear:skewness(#scan_result{n=0},#scan_result2{x2=0.0})),
+    ?assertEqual(0.0, bear:skewness(#scan_result{n=2},#scan_result2{x2=0.0})),
+    %%
     ?assertEqual(0.0, bear:skewness(#scan_result{n=10},#scan_result2{x2=0,x3=81})),
     ?assertEqual(3.0, bear:skewness(#scan_result{n=10},#scan_result2{x2=81,x3=810})).
 
 kurtosis_test() ->
+    %% check the handling of -0.0 and +0.0 from math:pow/2 in bear:kurtosis/2
+    ?assertEqual(0.0, bear:skewness(#scan_result{n=0},#scan_result2{x2=0.0})),
+    ?assertEqual(0.0, bear:skewness(#scan_result{n=2},#scan_result2{x2=0.0})),
+    %%
     ?assertEqual(0.0, bear:kurtosis(#scan_result{n=10},#scan_result2{x2=0,x4=81})),
     ?assertEqual(-2.0, bear:kurtosis(#scan_result{n=10},#scan_result2{x2=81,x4=810})).
 
@@ -188,6 +198,11 @@ get_pearson_correlation_nullresult_test() ->
     B = [1,0.25,0,0.25,1],
     ?assertEqual(0.0, bear:get_pearson_correlation(A, B)).
 
+get_pearson_correlation_zeros_test() ->
+    %% check the handling of +0.0 from math:sqrt/1 in bear:get_pearson_correlation/2
+    Zeros = lists:duplicate(5, 0),
+    ?assertEqual(0.0, bear:get_pearson_correlation(Zeros, Zeros)).
+
 round_bin_test() ->
     ?assertEqual(10, bear:round_bin(10)),
     ?assertEqual(10, bear:round_bin(10, 5)),
@@ -228,11 +243,13 @@ get_spearman_correlation_regular_test()->
 math_log_test() ->
     ?assertEqual(1, bear:math_log(0)),
     ?assertEqual(1.0, bear:math_log(0.0)),
+    ?assertEqual(1.0, bear:math_log(-0.0)),
     ?assertEqual(true, approx(3.737669618283368, bear:math_log(42))).
 
 inverse_test() ->
     ?assertEqual(0, bear:inverse(0)),
     ?assertEqual(0.0, bear:inverse(0.0)),
+    ?assertEqual(0.0, bear:inverse(-0.0)),
     ?assertEqual(0.5, bear:inverse(2)).
 
 get_hist_bins_test() ->

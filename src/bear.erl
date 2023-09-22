@@ -250,8 +250,7 @@ arithmetic_mean(#scan_result{n=N, sumX=Sum}) ->
 geometric_mean(#scan_result{n=N, sumLog=SumLog}) ->
     math:exp(SumLog/N).
 
-harmonic_mean(#scan_result{sumInv=Zero}) when Zero =:= 0 orelse
-                                              Zero =:= 0.0 ->
+harmonic_mean(#scan_result{sumInv=Zero}) when Zero == 0 ->
     %% Protect against divide by 0 if we have all 0 values
     0;
 harmonic_mean(#scan_result{n=N, sumInv=Sum}) ->
@@ -280,7 +279,7 @@ std_deviation(Scan_res, Scan_res2) ->
 %% }
 skewness(#scan_result{n=N}=Scan_res, #scan_result2{x3=X3}=Scan_res2) ->
     case math:pow(std_deviation(Scan_res,Scan_res2), 3) of
-        0.0 ->
+        Num when Num == 0.0 ->
             0.0;  %% Is this really the correct thing to do here?
         Else ->
             (X3/N)/Else
@@ -296,7 +295,7 @@ skewness(#scan_result{n=N}=Scan_res, #scan_result2{x3=X3}=Scan_res2) ->
 %% }
 kurtosis(#scan_result{n=N}=Scan_res, #scan_result2{x4=X4}=Scan_res2) ->
     case math:pow(std_deviation(Scan_res,Scan_res2), 4) of
-        0.0 ->
+        Num when Num == 0.0 ->
             0.0;  %% Is this really the correct thing to do here?
         Else ->
             ((X4/N)/Else) - 3
@@ -398,7 +397,7 @@ get_pearson_correlation(Values1, Values2) ->
         end, {0,0,0,0,0,0}, Values1, Values2),
     Numer = (N*SumXY) - (SumX * SumY),
     case math:sqrt(((N*SumXX)-(SumX*SumX)) * ((N*SumYY)-(SumY*SumY))) of
-        0.0 ->
+        Denom when Denom == 0.0 ->
             0.0; %% Is this really the correct thing to do here?
         Denom ->
             Numer/Denom
@@ -416,7 +415,7 @@ foldl2(_F, Acc, [], []) ->
 %% wrapper for math:log/1 to avoid dividing by zero
 math_log(0) ->
     1;
-math_log(0.0) ->
+math_log(Num) when Num == 0.0 ->
     1.0;
 math_log(X) when X < 0 ->
     0; % it's not possible to take a log of a negative number, return 0
@@ -426,7 +425,7 @@ math_log(X) ->
 %% wrapper for calculating inverse to avoid dividing by zero
 inverse(0) ->
     0;
-inverse(0.0) ->
+inverse(Num) when Num == 0.0 ->
     0.0;
 inverse(X) ->
     1/X.
