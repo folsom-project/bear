@@ -14,18 +14,9 @@
 %%% limitations under the License.
 %%%
 
-
-%%%-------------------------------------------------------------------
-%%% File:      bear.erl
-%%% @author    joe williams <j@boundary.com>
-%%% @doc
-%%% statistics functions for calucating based on id and a list of values
-%%% @end
-%%%------------------------------------------------------------------
-
 -module(bear).
-
-%-compile([export_all]).
+-doc "statistics functions for calucating based on id and a list of values".
+-author "joe williams <j@boundary.com>".
 
 -export([
          get_statistics/1,
@@ -72,8 +63,6 @@
         , variance/2
         ]).
 -endif.
-
--define(HIST_BINS, 10).
 
 -define(STATS_MIN, 5).
 
