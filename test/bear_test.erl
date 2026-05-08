@@ -14,17 +14,9 @@
 %%% limitations under the License.
 %%%
 
-%%% ====================================================================
-%%% file : bear_test.erl
-%%% @author : Rodolphe Quiedeville <rodolphe@quiedeville.org>
-%%% @doc
-%%% Unit test for functions defined in bear.erl
-%%% @end
-%%% ====================================================================
 -module(bear_test).
-
--compile(nowarn_export_all).
--compile(export_all).
+-doc "Unit test for functions defined in bear.erl".
+-author "Rodolphe Quiedeville <rodolphe@quiedeville.org>".
 
 -record(scan_result, {n=0, sumX=0, sumXX=0, sumInv=0, sumLog, max, min}).
 -record(scan_result2, {x2=0, x3=0, x4=0}).
@@ -309,7 +301,7 @@ negative2_test() ->
 
 match_values([H|T]) ->
     Res = bear:get_statistics_subset(test_values(), [mk_item(H)]),
-    Res = [H],
+    ?assertEqual(Res, [H]),
     match_values(T);
 match_values([]) ->
     ok.
@@ -321,7 +313,7 @@ mk_item({K, _}) ->
 
 match_values2(Stats) ->
     Items = [mk_item(I) || I <- Stats],
-    Stats = bear:get_statistics_subset(test_values(), Items),
+    ?assertEqual(Stats, bear:get_statistics_subset(test_values(), Items)),
     ok.
 
 test_values() ->
@@ -335,25 +327,10 @@ test_values() ->
      8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
      9,9,9,9,9,9,9].
 
-negative_values() ->
-    %% All values are negative
-    [-1,-1,-1,-1,-1,-1,-1,
-     -2,-2,-2,-2,-2,-2,-2,
-     -3,-3,-3,-3,-3,-3,-3,-3,-3,-3,-3,-3,-3,-3,
-     -4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,
-     -5,-5,-5,-5,-5,-5,-5,-5,-5,-5,-5,-5,-5,-5,
-     -6,-6,-6,-6,-6,-6,-6,-6,-6,-6,-6,-6,-6,-6,-6,-6,-6,-6,-6,-6,-6,
-     -7,-7,-7,-7,-7,-7,-7,-7,-7,-7,-7,-7,-7,-7,-7,-7,-7,-7,-7,-7,-7,
-     -8,-8,-8,-8,-8,-8,-8,-8,-8,-8,-8,-8,-8,-8,-8,-8,-8,-8,-8,-8,-8,
-     -9,-9,-9,-9,-9,-9,-9].
-
-between(Value, Low, High) ->
-    (Value >= Low) and (Value =< High).
-
 approx(Target, Value) ->
     High = Target + math:pow(10, - ?PRECISION_DIGIT),
     Low = Target - math:pow(10, - ?PRECISION_DIGIT),
-    case (Value > Low) and (Value < High) of
+    case (Value > Low) andalso (Value < High) of
         true -> true;
         _ -> Value
     end.
